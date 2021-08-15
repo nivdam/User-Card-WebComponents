@@ -110,6 +110,10 @@ templateJs.innerHTML = `
       border-radius: 5px;
       background-color: darkorchid;
     }
+
+    .btn:hover {
+      background-color: #b050e0;
+    }
   </style>
 
   <div class="user---card" id="js-template-text">
