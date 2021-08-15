@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Web Component - User card list</title>
   </head>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
   <body>
     <h1>
       This is a static template, there is no bundler or bundling involved!
@@ -61,7 +67,9 @@
           <div class="user---info">
             <content select=".xc"></content>
           </div>
-          <button type="button" class="btn js-toggle_info">Hide Info</button>
+          <button type="button" class="btn js-toggle_info _html">
+            Hide Info Html
+          </button>
         </div>
       </div>
     </template>

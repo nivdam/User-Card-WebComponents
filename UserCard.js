@@ -1,5 +1,71 @@
 const templateInnerHtml = document.querySelector("#inner-html-template");
 
+/* SLIDE UP */
+let slideUp = (target, duration = 500) => {
+  target.style.transitionProperty = "height, margin, padding";
+  target.style.transitionDuration = duration + "ms";
+  target.style.height = target.offsetHeight + "px";
+  target.offsetHeight;
+  target.style.overflow = "hidden";
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+
+  window.setTimeout(() => {
+    target.style.display = "none";
+    target.style.removeProperty("height");
+    target.style.removeProperty("padding-top");
+    target.style.removeProperty("padding-bottom");
+    target.style.removeProperty("margin-top");
+    target.style.removeProperty("margin-bottom");
+    target.style.removeProperty("overflow");
+    target.style.removeProperty("transition-duration");
+    target.style.removeProperty("transition-property");
+    //alert("!");
+  }, duration);
+};
+
+/* SLIDE DOWN */
+let slideDown = (target, duration = 500) => {
+  target.style.removeProperty("display");
+  let display = window.getComputedStyle(target).display;
+  if (display === "none") display = "block";
+  target.style.display = display;
+  let height = target.offsetHeight;
+  target.style.overflow = "hidden";
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+  target.offsetHeight;
+  target.style.transitionProperty = "height, margin, padding";
+  target.style.transitionDuration = duration + "ms";
+  target.style.height = height + "px";
+  target.style.removeProperty("padding-top");
+  target.style.removeProperty("padding-bottom");
+  target.style.removeProperty("margin-top");
+  target.style.removeProperty("margin-bottom");
+
+  window.setTimeout(() => {
+    target.style.removeProperty("height");
+    target.style.removeProperty("overflow");
+    target.style.removeProperty("transition-duration");
+    target.style.removeProperty("transition-property");
+  }, duration);
+};
+
+/* TOOGLE */
+var slideToggle = (target, duration = 500) => {
+  if (window.getComputedStyle(target).display === "none") {
+    return slideDown(target, duration);
+  } else {
+    return slideUp(target, duration);
+  }
+};
+
 const templateJs = document.createElement("template");
 templateJs.innerHTML = `
   <style id="xcv">
@@ -57,7 +123,7 @@ templateJs.innerHTML = `
         <li><slot name="phone" /></li>
       </ul>
       </div>
-      <button type="button" class="btn js-toggle_info">Hide Info</button>
+      <button type="button" class="btn js-toggle_info _js">Hide Info js</button>
     </div>
   </div>  
 `;
@@ -65,6 +131,8 @@ templateJs.innerHTML = `
 class UserCard extends HTMLElement {
   constructor() {
     super();
+
+    this.isShowInfo = true;
 
     this.attachShadow({ mode: "open" }); // for styles
 
@@ -87,6 +155,34 @@ class UserCard extends HTMLElement {
       alt: `${this.getAttribute("name")} user`,
       src: `${this.getAttribute("user-url")}`
     });
+  }
+
+  connectedCallback() {
+    this.shadowRoot
+      .querySelector(".js-toggle_info._js")
+      .addEventListener("click", (e) => {
+        const _self = e.target;
+        let _userInfoElem = _self.parentNode.querySelector(".user---info");
+        this.isShowInfo = !this.isShowInfo;
+
+        if (this.isShowInfo === true) {
+          _self.classList.contains("_js")
+            ? (_self.innerText = "Hide Info js")
+            : (_self.innerText = "Hide Info Html");
+          slideDown(_userInfoElem, 350);
+        } else {
+          _self.classList.contains("_js")
+            ? (_self.innerText = "Show Info js")
+            : (_self.innerText = "Show Info Html");
+          slideUp(_userInfoElem, 200);
+        }
+
+        // slideToggle(_self.parentNode.querySelector(".user---info"), 400);
+      });
+  }
+
+  disconnectedCallback() {
+    this.shadowRoot.querySelector(".js-toggle_info").removeEventListener();
   }
 }
 
