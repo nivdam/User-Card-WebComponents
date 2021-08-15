@@ -136,21 +136,11 @@ class UserCard extends HTMLElement {
 
     this.attachShadow({ mode: "open" }); // for styles
 
-    // inner html template
-    this.shadowRoot.appendChild(templateInnerHtml.content.cloneNode(true));
-    this.shadowRoot.querySelector(
-      "#inner-html-text h3"
-    ).innerHTML = `${this.getAttribute("name")} - html template`;
-    Object.assign(this.shadowRoot.querySelector("#inner-html-text img"), {
-      alt: `${this.getAttribute("name")} user`,
-      src: `${this.getAttribute("user-url")}`
-    });
-
     // js template element
     this.shadowRoot.appendChild(templateJs.content.cloneNode(true));
     this.shadowRoot.querySelector(
       "#js-template-text h3"
-    ).innerText = `${this.getAttribute("name")} js tem`;
+    ).innerText = `${this.getAttribute("name")}`;
     Object.assign(this.shadowRoot.querySelector("#js-template-text img"), {
       alt: `${this.getAttribute("name")} user`,
       src: `${this.getAttribute("user-url")}`
@@ -166,18 +156,12 @@ class UserCard extends HTMLElement {
         this.isShowInfo = !this.isShowInfo;
 
         if (this.isShowInfo === true) {
-          _self.classList.contains("_js")
-            ? (_self.innerText = "Hide Info js")
-            : (_self.innerText = "Hide Info Html");
+          _self.innerText = "Hide Info";
           slideDown(_userInfoElem, 350);
         } else {
-          _self.classList.contains("_js")
-            ? (_self.innerText = "Show Info js")
-            : (_self.innerText = "Show Info Html");
+          _self.innerText = "Show Info Html";
           slideUp(_userInfoElem, 200);
         }
-
-        // slideToggle(_self.parentNode.querySelector(".user---info"), 400);
       });
   }
 

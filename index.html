@@ -8,8 +8,30 @@
   </head>
 
   <style>
+    *:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+      all: unset;
+      display: revert;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
+      padding: 3rem 2rem;
+      margin: 0;
+    }
+
+    .container {
+      display: grid;
+      max-width: 980px;
+      padding: 1.5rem;
+      column-gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      margin: 0 auto;
     }
   </style>
   <body>
@@ -17,78 +39,23 @@
       This is a static template, there is no bundler or bundling involved!
     </h1>
 
-    <template id="inner-html-template">
-      <style>
-        :host {
-          display: block;
-          margin-top: 15px;
-        }
+    <main class="container">
+      <user-card
+        name="Niv Dam"
+        user-url="https://randomuser.me/api/portraits/men/51.jpg"
+      >
+        <div slot="email">nivlog@gmail.com</div>
+        <div slot="phone">052-2-556-187</div>
+      </user-card>
 
-        .user---card {
-          display: grid;
-          width: 100%;
-          max-width: 500px;
-          grid-template-columns: 1fr 2fr;
-          grid-gap: 10px;
-          font-family: "Arial", sans-serif;
-          background-color: #f4f4f4;
-          border-bottom: 5px solid darkorchid;
-        }
-
-        .user---card ~ .user---card {
-          margin-top: 15px;
-        }
-
-        img {
-          width: 100%;
-        }
-
-        .user--avatar {
-          border-radius: 0 30% / 30%;
-          overflow: hidden;
-          box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
-        }
-
-        .btn {
-          cursor: pointer;
-          color: white;
-          padding: 5px 10px;
-          border: 0;
-          border-radius: 5px;
-          background-color: darkorchid;
-        }
-      </style>
-
-      <div class="user---card" id="inner-html-text">
-        <picture class="user--avatar"><img src="" alt="" /></picture>
-        <div class="user---content">
-          <h3 class="user---title"></h3>
-
-          <div class="user---info">
-            <content select=".xc"></content>
-          </div>
-          <button type="button" class="btn js-toggle_info _html">
-            Hide Info Html
-          </button>
-        </div>
-      </div>
-    </template>
-
-    <user-card
-      name="Niv"
-      user-url="https://randomuser.me/api/portraits/men/51.jpg"
-    >
-      <div slot="email">nivlog@gmail.com</div>
-      <div slot="phone">052-2-556-187</div>
-    </user-card>
-
-    <user-card
-      name="Niva"
-      user-url="https://randomuser.me/api/portraits/women/51.jpg"
-    >
-      <div slot="email">niva_69@gmail.com</div>
-      <div slot="phone">057-4-835-001</div>
-    </user-card>
+      <user-card
+        name="Dureja Ankush"
+        user-url="https://randomuser.me/api/portraits/women/51.jpg"
+      >
+        <div slot="email">ankush_69@gmail.com</div>
+        <div slot="phone">057-4-835-001</div>
+      </user-card>
+    </main>
 
     <script src="./UserCard.js" is="userCard-js"></script>
   </body>
